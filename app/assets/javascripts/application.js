@@ -17,6 +17,6 @@
 //= require_tree .
 
 //http://www.slideshare.net/nebirhos/geolocation-on-rails
-$(’[data-action=cheat]’).click(function() { 
-  $.getJSON(’/geocode/’, {query: $(’#address’).val()}, map.cheat); 
-});
+//$(’[data-action=cheat]’).click(function() { 
+//  $.getJSON(’/geocode/’, {query: $(’#address’).val()}, map.cheat); 
+//});
