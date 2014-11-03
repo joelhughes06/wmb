@@ -1,0 +1,21 @@
+<div class='well'>
+
+<%= form_tag '/login' do %>
+  <div class='control-group'>
+    <%= label_tag :username %>
+    <%= text_field_tag :username %>
+  </div>
+<br/>
+<br/>
+  <div class='control-group'>
+    <%= label_tag :password, 'Password' %>
+    <%= password_field_tag :password %>
+  </div>
+  <div style='float:right'>
+    <%= submit_tag 'Login', class: 'btn btn-success' %>
+  </div>
+  <% end %>
+<br/>
+<br/>
+
+</div>

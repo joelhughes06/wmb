@@ -1,0 +1,68 @@
+<h3>You've requested a search for a bicycle with serial number:</h3>
+
+  <h2><div style="float:right"><%= @bike.serial_number %></div></h2>
+  <br/>
+  <br/>
+<%= form_tag(bikes_path, :method => "get", id: "search-form") do %>
+  <%= hidden_field_tag :search, @bike.serial_number %>
+  <div style="float:right"><%= submit_tag "Proceed to search results", :name => nil, class: 'btn btn-primary' %></div>
+<% end %>
+  <br/>
+  <br/>
+<h3>Add or edit information about the bike you searched for?</h3>
+<div style="float:right"><%= button_to 'Make changes', edit_bike_path(@bike), :method => :get, class: 'btn btn-primary' %></div>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+<div class='well'>
+
+<% if !logged_in? %>
+<h3>Want the full benefits of Where's My Bike?</h3>  
+  <div style="float:left">
+    <%= link_to 'Create an account', register_path, class: 'btn btn-primary' %>
+    <br/>
+    <small>(not needed for simple search and edit)</small>
+
+    <br/>
+  </div>
+  <div style="float:right">
+    Already have an account?
+    <%= link_to 'Login', login_path, class: 'btn btn-success' %>
+  </div>
+<br/>
+<br/>
+</div>  
+<% end %>
+
+<% if logged_in? %>
+  <div style="float:right">
+    <%= link_to 'Logout', logout_path, class: 'btn btn-warning' %>
+  </div>
+<% end %>
+
+<% if logged_in? %>
+  <h3>All Inquiries</h3>      
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="col-md-1">Serial number</th>
+        <th class="col-md-1">Email of inquirer</th>
+        <th class="col-md-1">Location</th>
+        <th class="col-md-1">Reason</th>
+        <th class="col-md-1">Date & Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% @bikes.each do |result| %>
+          <td><%= link_to result.serial_number, bike_path(result), :action => 'show', :id => result.id  %></td>
+          <td><%= result.submitter %></td>
+          <td><%= result.lat_long %></td>
+          <td><%= result.inquiry_reason %></td>
+          <td><%=result.created_at %></td>
+      </tr>
+        <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,85 @@
+<body onload="showPosition()">
+<!-- http://www.rgagnon.com/jsdetails/js-0084.html -->
+<script type="text/javascript">
+function f(o){
+  o.value=o.value.toUpperCase().replace(/([^0-9A-Z])/g,"");
+}
+
+function g(o){
+  if(/[^0-9A-Z]/.test(o.value)){
+    o.value=o.value.toUpperCase().replace(/([^0-9A-Z])/g,"");
+  }
+}
+</script>
+
+<% form_tag(bikes_path, :method => "get", id: "search-form") do %>
+
+<input type="text"
+       onkeydown="f(this)"
+       onkeyup="f(this)"
+       onblur="f(this)"
+       onclick="f(this)" 
+
+  <% text_field_tag :search, params[:search], placeholder: "Search Bikes" %>
+  <% submit_tag "Search", :name => nil %>
+<% end %>
+<br/>
+<br/>
+
+
+<div class='well'>
+<h3>The following serial numbers match your search:</h3>
+<small>(including your submission, listed first)</small> 
+<br/>
+<br/>  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Serial number</th>
+        <th>Email of inquirer</th>
+        <th>Location</th>
+        <th>Reason</th>
+        <th>Date & Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% @bikes.each do |result| %>
+          <td><%= link_to result.serial_number, :action => 'show', :id => result.id  %></td>
+          <td><%= result.submitter %></td>
+          <td><%= link_to result.lat_long %></td>
+          <td><%= result.inquiry_reason %></td>
+          <td><%=result.created_at %></td>
+      </tr>
+        <% end %>
+
+    </tbody>
+  </table>
+</div>
+<!--http://www.w3schools.com/HTML/html5_geolocation.asp-->
+<!-- <button onclick="getLocation()">Try It</button> 
+<p id="demo"></p>
+<%= @lat_lng %>
+-->
+<div id="mapholder"></div>
+</body>
+<script>
+
+  function showPosition(position) {
+
+      latlon = new google.maps.LatLng(<%= @lat_lng %>)
+      mapholder = document.getElementById('mapholder')
+      mapholder.style.height = '250px';
+      mapholder.style.width = '500px';
+
+      var myOptions = {
+      center:latlon,zoom:14,
+      mapTypeId:google.maps.MapTypeId.ROADMAP,
+      mapTypeControl:false,
+      navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+      }
+      
+      var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
+      var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+  }
+</script>

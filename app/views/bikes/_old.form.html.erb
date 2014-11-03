@@ -1,0 +1,18 @@
+<%= form_for Bike.new do |f| %>
+<h3>Create a new record</h3>
+<br/>
+<br/>
+What is the bike's serial number?
+<br/>
+<%= f.text_field :serial_number %>
+<br/>
+<br/>
+What is your email address?
+<br/>
+<br/>
+<%= f.text_field :submitter %>
+<br/>
+<br/>
+
+<%= f.submit "Lookup", class: 'btn btn-primary' %>
+<% end %>

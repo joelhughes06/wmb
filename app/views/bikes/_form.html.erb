@@ -1,0 +1,122 @@
+<!-- <body onload="getLocation()"> -->
+<div class='well'>
+<!-- http://www.rgagnon.com/jsdetails/js-0084.html -->
+<script type="text/javascript">
+function f(o){
+  o.value=o.value.toUpperCase().replace(/([^0-9A-Z])/g,"");
+}
+
+function g(o){
+  if(/[^0-9A-Z]/.test(o.value)){
+    o.value=o.value.toUpperCase().replace(/([^0-9A-Z])/g,"");
+  }
+}
+</script>
+
+<%= form_for Bike.new do |f| %>
+  <h1>Start Here:</h1>
+  <h4>What is the bike's serial number?</h4>
+  <small>(letters and numbers only, no spaces)</small>
+  <br/>
+  <input type="text"
+         onkeydown="f(this)"
+         onkeyup="f(this)"
+         onblur="f(this)"
+         onclick="f(this)" 
+  <%= f.text_field :serial_number, :required => true %>
+  </>
+  <h4>What is your email address?</h4>
+  <%= f.text_field :submitter, :required => true %>
+  <br/>
+  <br/>
+  <%= f.hidden_field :submitter_ip, :value => @ip %>
+  <!--http://www.w3schools.com/HTML/html5_geolocation.asp-->
+  <!-- <button onclick="getLocation()">Try It</button> -->
+  <p id="demo"></p>
+  <div id="mapholder"></div>
+  
+  <script>
+  var x = document.getElementById("demo");
+
+  function getLocation() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition,showError);
+      } else { 
+          x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+  }
+  function showPosition(position) {
+      x.innerHTML = "Latitude: " + position.coords.latitude + 
+      "<br>Longitude: " + position.coords.longitude;  
+
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
+      latlon = new google.maps.LatLng(<%= @lat_lng %>)
+      mapholder = document.getElementById('mapholder')
+      mapholder.style.height = '250px';
+      mapholder.style.width = '500px';
+
+      var myOptions = {
+      center:latlon,zoom:14,
+      mapTypeId:google.maps.MapTypeId.ROADMAP,
+      mapTypeControl:false,
+      navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+      }
+      
+      var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
+      var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+  }
+  function showError(error) {
+      switch(error.code) {
+          case error.PERMISSION_DENIED:
+              x.innerHTML = "User denied the request for Geolocation."
+              break;
+          case error.POSITION_UNAVAILABLE:
+              x.innerHTML = "Location information is unavailable."
+              break;
+          case error.TIMEOUT:
+              x.innerHTML = "The request to get user location timed out."
+              break;
+          case error.UNKNOWN_ERROR:
+              x.innerHTML = "An unknown error occurred."
+              break;
+      }
+  }
+
+  </script>
+  <!-- http://stackoverflow.com/questions/9758416/storing-html5-geolocation-data -->
+  <script>
+  function getGeoLocation() {
+    navigator.geolocation.getCurrentPosition(setGeoCookie);
+  }
+
+  function setGeoCookie(position) {
+    var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
+    document.cookie = "lat_lng=" + escape(cookie_val);
+  }
+  </script>
+  <%- unless @lat_lng %>
+  <script>
+    getGeoLocation();
+  </script>
+  <%- end %>
+<!-- <%= @lat_lng %> --> 
+<!-- remove unwanted letters & characters from @lat_lng -->
+<script type="text/javascript">
+function h(o){
+  o.value=o.value().replace(/([^0-9 \.,-'_])/g,"");
+}
+</script>
+  <input type="hidden"
+         onsubmit="h(this)"> 
+  <%= f.hidden_field :lat_long, :value => @lat_lng, :required => true %>
+  </>
+  <br/>
+  <br/>
+  <div style="float:right"><%= f.submit "Next", class: 'btn btn-primary' %></div>
+  <br/>
+  <br/>  
+
+  <% end %>
+</div>
+<!-- </body> -->

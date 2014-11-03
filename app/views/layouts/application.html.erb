@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Wmb</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+<!--http://www.slideshare.net/nebirhos/geolocation-on-rails-->
+  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js" %>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+<%= yield(:head) %>  
+</head>
+<body>
+  <%= render 'layouts/messages' %>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4">
+        <div class="well">
+          <img src='/assets/logo.png' style='width:100%'>
+            <h1>Reuniting Owners With Their Bikes</h1>
+        </div>
+      </div>
+      <div class="col-xs-8">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
