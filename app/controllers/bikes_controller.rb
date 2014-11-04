@@ -5,6 +5,7 @@ class BikesController<ApplicationController
 # http://stackoverflow.com/questions/9758416/storing-html5-geolocation-data
 	def lat_lng
   	@lat_lng = cookies[:lat_lng]
+    @lat_lng = @lat_lng.to_s.gsub(/[|]/, ',')
     @lat_lng = @lat_lng.to_s.gsub(/[\[\]" ]/, '')
 	end
 

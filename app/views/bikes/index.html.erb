@@ -47,7 +47,7 @@ function g(o){
         <% @bikes.each do |result| %>
           <td><%= link_to result.serial_number, :action => 'show', :id => result.id  %></td>
           <td><%= result.submitter %></td>
-          <td><%= link_to result.lat_long %></td>
+          <td><%= link_to result.lat_long, '#', :onclick => '@lat_lng == result.lat_long'  %></td>
           <td><%= result.inquiry_reason %></td>
           <td><%=result.created_at %></td>
       </tr>
