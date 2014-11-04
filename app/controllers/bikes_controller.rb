@@ -23,7 +23,7 @@ class BikesController<ApplicationController
 #			flash[:notice] = "One moment please..."
 			redirect_to bike_path(@bike)
 		else
-			render 'new'
+			render 'register'
 		end
 	end
 
