@@ -1,3 +1,4 @@
+<body onload="getGeoLocation()">
 <div class='well'>
 
 <script type="text/javascript">
@@ -31,22 +32,27 @@ function g(o){
   <%= f.hidden_field :submitter_ip, :value => @ip %>
 
 
-
+<!-- jquery below from http://stackoverflow.com/questions/4959770/how-to-pass-a-javascript-variable-into-a-erb-code-in-a-js-view -->
   <script>
   function getGeoLocation() {
     navigator.geolocation.getCurrentPosition(setGeoCookie);
   }
 
   function setGeoCookie(position) {
-    var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
+    var cookie_val = position.coords.latitude + "," + position.coords.longitude;
     document.cookie = "lat_lng=" + escape(cookie_val);
+
+   $(document).ready(function(){
+        $("#loco").val(cookie_val);
+    });
+
   }
   </script>
-  <%- unless @lat_lng %>
+ <%- unless @lat_lng %>
   <script>
     getGeoLocation();
   </script>
-  <%- end %>
+ <%- end %>
 
 <script type="text/javascript">
 function h(o){
@@ -55,7 +61,7 @@ function h(o){
 </script>
   <input type="hidden"
          onsubmit="h(this)"> 
-  <%= f.hidden_field :lat_long, :value => @lat_lng, :required => true %>
+  <%= f.hidden_field :lat_long, :id => "loco", :required => true %>
   </>
   <br/>
   <br/>
@@ -65,3 +71,5 @@ function h(o){
 
   <% end %>
 </div>
+
+</body>

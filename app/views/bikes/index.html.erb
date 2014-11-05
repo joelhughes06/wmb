@@ -68,7 +68,7 @@ function g(o){
 
   function showPosition(position) {
 
-      latlon = new google.maps.LatLng(<%= @lat_lng %>)
+      latlon = new google.maps.LatLng(<%= @bikes.first.lat_long %>)
       mapholder = document.getElementById('mapholder')
       mapholder.style.height = '250px';
       mapholder.style.width = '500px';
