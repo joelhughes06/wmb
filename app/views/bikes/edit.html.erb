@@ -94,9 +94,12 @@
     <!-- /div  -->
 
     <div class='row'>
-      <div class='col-xs-7'>
+      <div class='col-xs-5'>
         <%= f.submit 'Submit updated info', class: 'btn btn-primary' %>
     	</div>
+      <div class='col-xs-2'>
+      <%= link_to 'No changes', :back, class: 'btn btn-warning' %>
+      </div>
     </div>
 <!--
 <%= :submitter%>

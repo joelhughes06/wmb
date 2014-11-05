@@ -6,7 +6,6 @@ class BikesController<ApplicationController
   end
 
 
-# http://stackoverflow.com/questions/9758416/storing-html5-geolocation-data
 	def lat_lng
   	@lat_lng = cookies[:lat_lng]
     @lat_lng = @lat_lng.to_s.gsub(/[|]/, ',')
@@ -65,8 +64,8 @@ class BikesController<ApplicationController
 	  if params[:search]
     	@bikes = Bike.search(params[:search]).order("created_at DESC")
 # this should be viewable only by admin:
-  	else
-  	  @bikes = Bike.all.order('created_at DESC')
+#  	else
+#  	  @bikes = Bike.all.order('created_at DESC')
 	  end			
 	end
 

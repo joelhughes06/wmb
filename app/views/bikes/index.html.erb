@@ -1,5 +1,5 @@
 <body onload="showPosition()">
-<!-- http://www.rgagnon.com/jsdetails/js-0084.html -->
+
 <script type="text/javascript">
 function f(o){
   o.value=o.value.toUpperCase().replace(/([^0-9A-Z])/g,"");
@@ -35,7 +35,7 @@ function g(o){
   <table class="table">
     <thead>
       <tr>
-        <th>Serial number</th>
+        <th>Serial number<br/>(click for more details)</th>
         <th>Email of inquirer</th>
         <th>Location</th>
         <th>Reason</th>
@@ -45,30 +45,39 @@ function g(o){
     <tbody>
       <tr>
         <% @bikes.each do |result| %>
-          <td><%= link_to result.serial_number, :action => 'show', :id => result.id  %></td>
+          <td><%= link_to result.serial_number, '#', :id => 'my-link'  %></td>
           <td><%= result.submitter %></td>
-          <td><%= result.lat_long %></td>
+          <td><%= link_to result.lat_long, '#'%></td>
           <td><%= result.inquiry_reason %></td>
           <td><%=result.created_at %></td>
       </tr>
+
+      <script>
+        $('#my-link').click(function (event) {
+          alert('Serial number: <%= result.serial_number %>\nSubmitted by: <%= result.submitter %>\nDate: <%= result.created_at %>\nLost or Stolen? reason code 2: <%= result.inquiry_reason %>\nBrand: <%= result.brand %>\nModel: <%= result.model %>\nStyle: <%= result.style %>\nColor: <%= result.color %>\nSize: <%= result.size_letter %>\nSize in centimeters: <%= result.size_centimeters %>\nSize in inches: <%= result.size_inches %>\nYear manufactured: <%= result.year %>\nDescription: <%= result.description %>\nStore purchased from: <%= result.store_name %>\nStore zip code: <%= result.store_zip %>');
+          event.preventDefault(); // Prevent link from following its href
+        });
+
+     
+      </script>
+
         <% end %>
 
     </tbody>
   </table>
 </div>
-<!-- link_to   , '#', :onclick => '@lat_lng == result.lat_long' -->
-<!--http://www.w3schools.com/HTML/html5_geolocation.asp-->
-<!-- <button onclick="getLocation()">Try It</button> 
-<p id="demo"></p>
-<%= @lat_lng %>
--->
+
+Your location:
 <div id="mapholder"></div>
+  <div style="float:right">
+    <%= link_to 'Back', :back, class: 'btn btn-warning' %>
+  </div>
 </body>
 <script>
 
   function showPosition(position) {
 
-      latlon = new google.maps.LatLng(<%= @bikes.first.lat_long %>)
+      latlon = new google.maps.LatLng(<%= @bikes.last.lat_long %>)
       mapholder = document.getElementById('mapholder')
       mapholder.style.height = '250px';
       mapholder.style.width = '500px';

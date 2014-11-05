@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?
 
 
-# http://stackoverflow.com/questions/9758416/storing-html5-geolocation-data
+
   def lat_lng
     @lat_lng ||= session[:lat_lng] ||= get_geolocation_data_the_hard_way
   end
