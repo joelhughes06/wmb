@@ -1,5 +1,9 @@
 class BikesController<ApplicationController
-	before_action :lat_lng
+	
+
+  def before_save
+    lat_lng
+  end
 
 
 # http://stackoverflow.com/questions/9758416/storing-html5-geolocation-data
@@ -12,7 +16,7 @@ class BikesController<ApplicationController
 	def new
 #		@bike = Bike.new
 		@ip = request.remote_ip
-    @lat_lng
+    lat_lng
 	end
 
 	def create
