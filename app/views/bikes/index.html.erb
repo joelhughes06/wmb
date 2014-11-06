@@ -34,18 +34,21 @@ function g(o){
 <br/>  
   <table class="table">
     <thead>
+        <% @bikes.each do |result| %>      
       <tr>
-        <th>Serial number<br/>(click for more details)</th>
+        <th>Serial number<br/></th>
         <th>Email of inquirer</th>
         <th>Location</th>
         <th>Reason</th>
         <th>Date & Time</th>
+        <td><%= link_to 'More Details', '#', :id => 'my-link' %></td>        
       </tr>
     </thead>
     <tbody>
       <tr>
-        <% @bikes.each do |result| %>
-          <td><%= link_to result.serial_number, '#', :id => 'my-link'  %></td>
+
+          <!-- <td><%= link_to result.serial_number, '#', :id => 'my-link'  %></td> -->
+          <td><%= result.serial_number %></td>
           <td><%= result.submitter %></td>
           <td><%= link_to result.lat_long, '#'%></td>
           <td><%= result.inquiry_reason %></td>
@@ -57,8 +60,28 @@ function g(o){
           alert('Serial number: <%= result.serial_number %>\nSubmitted by: <%= result.submitter %>\nDate: <%= result.created_at %>\nWhy did you search for this bike? <%= result.inquiry_reason %>\nBrand: <%= result.brand %>\nModel: <%= result.model %>\nStyle: <%= result.style %>\nColor: <%= result.color %>\nSize: <%= result.size_letter %>\nSize in centimeters: <%= result.size_centimeters %>\nSize in inches: <%= result.size_inches %>\nYear manufactured: <%= result.year %>\nDescription: <%= result.description %>\nStore purchased from: <%= result.store_name %>\nStore zip code: <%= result.store_zip %>');
           event.preventDefault(); // Prevent link from following its href
         });
+      </script>
 
-     
+
+      <script>
+
+        function showPosition(position) {
+
+            latlon = new google.maps.LatLng(<%= result.lat_long %>)
+            mapholder = document.getElementById('mapholder')
+            mapholder.style.height = '250px';
+            mapholder.style.width = '500px';
+
+            var myOptions = {
+            center:latlon,zoom:14,
+            mapTypeId:google.maps.MapTypeId.ROADMAP,
+            mapTypeControl:false,
+            navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+            }
+            
+            var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
+            var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+        }
       </script>
 
         <% end %>
@@ -68,11 +91,14 @@ function g(o){
 </div>
 
 Your location:
+
 <div id="mapholder"></div>
+
   <div style="float:right">
     <%= link_to 'Back', :back, class: 'btn btn-warning' %>
   </div>
 </body>
+<!--
 <script>
 
   function showPosition(position) {
@@ -93,3 +119,4 @@ Your location:
       var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
   }
 </script>
+-->
