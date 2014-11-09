@@ -52,12 +52,12 @@ function g(o){
           <td><%= result.submitter %></td>
           <td><%= link_to result.lat_long, '#'%></td>
           <td><%= result.inquiry_reason %></td>
-          <td><%=result.created_at %></td>
+          <td><%= display_datetime(result.created_at) %></td>
       </tr>
 
       <script>
         $('#my-link').click(function (event) {
-          alert('Serial number: <%= result.serial_number %>\nSubmitted by: <%= result.submitter %>\nDate: <%= result.created_at %>\nWhy did you search for this bike? <%= result.inquiry_reason %>\nBrand: <%= result.brand %>\nModel: <%= result.model %>\nStyle: <%= result.style %>\nColor: <%= result.color %>\nSize: <%= result.size_letter %>\nSize in centimeters: <%= result.size_centimeters %>\nSize in inches: <%= result.size_inches %>\nYear manufactured: <%= result.year %>\nDescription: <%= result.description %>\nStore purchased from: <%= result.store_name %>\nStore zip code: <%= result.store_zip %>');
+          alert('Serial number: <%= result.serial_number %>\nSubmitted by: <%= result.submitter %>\nDate: <%= display_datetime(result.created_at) %>\nWhy did you search for this bike? <%= result.inquiry_reason %>\nBrand: <%= result.brand %>\nModel: <%= result.model %>\nStyle: <%= result.style %>\nColor: <%= result.color %>\nSize: <%= result.size_letter %>\nSize in centimeters: <%= result.size_centimeters %>\nSize in inches: <%= result.size_inches %>\nYear manufactured: <%= result.year %>\nDescription: <%= result.description %>\nStore purchased from: <%= result.store_name %>\nStore zip code: <%= result.store_zip %>');
           event.preventDefault(); // Prevent link from following its href
         });
       </script>

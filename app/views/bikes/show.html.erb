@@ -3,37 +3,36 @@
   <h2><div style="float:right"><%= @bike.serial_number %></div></h2>
   <br/>
   <br/>
+
+  <div style="float:right"><%= button_to 'Add additional info', edit_bike_path(@bike), :method => :get %></div>
+  <br/>
+  <br/>
+
 <%= form_tag(bikes_path, :method => "get", id: "search-form") do %>
   <%= hidden_field_tag :search, @bike.serial_number %>
   <div style="float:right"><%= submit_tag "Proceed to search results", :name => nil, class: 'btn btn-primary' %></div>
 <% end %>
-  <br/>
-  <br/>
-<h3>Add or edit information about the bike you searched for?</h3>
-<div style="float:right"><%= button_to 'Make changes', edit_bike_path(@bike), :method => :get, class: 'btn btn-primary' %></div>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-<div class='well'>
 
-<% if !logged_in? %>
-<h3>Want the full benefits of Where's My Bike?</h3>  
-  <div style="float:left">
-    <%= link_to 'Create an account', register_path, class: 'btn btn-primary' %>
-    <br/>
-    <small>(not needed for simple search and edit)</small>
-
-    <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+<div class='row'>
+  <div class="col-xs-6">  
   </div>
-  <div style="float:right">
-    Already have an account?
-    <%= link_to 'Login', login_path, class: 'btn btn-success' %>
-  </div>
-<br/>
-<br/>
+    <div class="col-xs-4" style="float:right">
+      <% if !logged_in? %>
+      <h3>Want the full benefits of Where's My Bike?</h3>  
+          <h4><%= link_to 'Create an account', register_path %></h4>
+          <small>(not needed for simple search and edit)</small>
+          <br/>
+          <br/>     
+          Have an account?
+          <%= link_to 'Login', login_path, class: 'btn btn-success' %>
+      <% end %>
+    </div>
 </div>  
-<% end %>
+
 
 <% if logged_in? %>
   <div style="float:right">
